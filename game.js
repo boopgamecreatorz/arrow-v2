@@ -1787,3 +1787,43 @@ updateMovingPlatforms = function(dt) {
 };
 
 console.log("Rocket jump and T-platform collision patch enabled!");
+
+// ==========================================
+// WASD MOVEMENT PATCH
+// Paste at the VERY BOTTOM of game.js
+// ==========================================
+
+// W = Jump
+// A = Move left
+// S = Move down (no special action)
+// D = Move right
+
+window.addEventListener("keydown", e => {
+    const key = e.key.toLowerCase();
+
+    if (["w", "a", "s", "d"].includes(key)) {
+        e.preventDefault();
+    }
+
+    if (key === "a") keys.left = true;
+    if (key === "d") keys.right = true;
+
+    if (key === "w" && !e.repeat) {
+        jumpQueued = true;
+    }
+});
+
+window.addEventListener("keyup", e => {
+    const key = e.key.toLowerCase();
+
+    if (key === "a") keys.left = false;
+    if (key === "d") keys.right = false;
+});
+
+window.addEventListener("blur", () => {
+    keys.left = false;
+    keys.right = false;
+});
+
+console.log("WASD controls enabled!");
+
